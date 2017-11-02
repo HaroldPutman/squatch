@@ -51,19 +51,21 @@ function receiveMessages() {
       console.log(err, err.stack);
     } else {
       console.log('received', msg);
-      for (const message of msg.Messages) {
-        console.log(message.Body);
-        sqs.deleteMessage({
-          QueueUrl: process.env['SQS_QUEUE'],
-          ReceiptHandle: message.ReceiptHandle
-        }, (err, data) => {
-          if (err) {
-            console.log(err, err.stack);
-          } else {
-            console.log('deleted');
-            console.log(data);
-          }
-        });
+      if (msg.Messages) {
+        for (const message of msg.Messages) {
+          console.log(message.Body);
+          sqs.deleteMessage({
+            QueueUrl: process.env['SQS_QUEUE'],
+            ReceiptHandle: message.ReceiptHandle
+          }, (err, data) => {
+            if (err) {
+              console.log(err, err.stack);
+            } else {
+              console.log('deleted');
+              console.log(data);
+            }
+          });
+        }
       }
     }
   });
