@@ -1,0 +1,20 @@
+{
+  "name": "squatch",
+  "version": "1.0.0",
+  "description": "Watch AWS SQS queue",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "aws-sdk": "^2.142.0",
+    "dotenv": "^4.0.0"
+  },
+  "engines": {
+    "node": ">=4.0.0"
+  }
+
+}
