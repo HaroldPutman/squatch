@@ -10,10 +10,10 @@
  */
 require('dotenv').config();
 const AWS = require('aws-sdk');
+const async = require('async');
 
 if (process.env['SQS_ROLE']) {
   const sts = new AWS.STS();
-  console.log('atempt role');
   sts.assumeRole({
     DurationSeconds: 3600,
     RoleArn: process.env['SQS_ROLE'],
@@ -22,6 +22,7 @@ if (process.env['SQS_ROLE']) {
     if (err) {
       console.log(err, err.stack);
     } else {
+      console.log('Authenticated ...');
       // Update the credentials
       AWS.config.update({
         credentials: new AWS.Credentials(
@@ -42,31 +43,39 @@ function receiveMessages() {
     apiVersion: '2012-11-05',
     endpoint: process.env['SQS_QUEUE']
   });
-  sqs.receiveMessage({
-    QueueUrl: process.env['SQS_QUEUE'],
-    WaitTimeSeconds: 3,
-    AttributeNames: ['All']
-  }, (err, msg) => {
-    if (err) {
-      console.log(err, err.stack);
-    } else {
-      console.log('received', msg);
-      if (msg.Messages) {
+  console.log('Waiting for messages ...');
+  async.forever((next)=> {
+    sqs.receiveMessage({
+      QueueUrl: process.env['SQS_QUEUE'],
+      WaitTimeSeconds: 3,
+      AttributeNames: ['All']
+    }, (err, msg) => {
+      if (err) {
+        next(err);
+      } else if (msg.Messages) {
+        process.stdout.write('\n');
         for (const message of msg.Messages) {
-          console.log(message.Body);
+          console.log(JSON.parse(message.Body));
           sqs.deleteMessage({
             QueueUrl: process.env['SQS_QUEUE'],
             ReceiptHandle: message.ReceiptHandle
           }, (err, data) => {
             if (err) {
-              console.log(err, err.stack);
+              next(err);
             } else {
-              console.log('deleted');
-              console.log(data);
+              data;
+              console.log('---');
+              next();
             }
           });
         }
+      } else {
+        // No messages left
+        process.stdout.write('.');
+        next();
       }
-    }
+    });
+  }, (err) => {
+    console.log(err, err.stack);
   });
 }

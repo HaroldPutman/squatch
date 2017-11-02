@@ -7,14 +7,15 @@
     "start": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
+  "author": "Harold Putman <h.putman@ieee.org>",
+  "private": true,
   "license": "ISC",
   "dependencies": {
+    "async": "^2.5.0",
     "aws-sdk": "^2.142.0",
     "dotenv": "^4.0.0"
   },
   "engines": {
     "node": ">=4.0.0"
   }
-
 }
