@@ -68,32 +68,3 @@ function receiveMessages() {
     }
   });
 }
-
-/*
-}
-    sqs.receiveMessage({
-      QueueUrl: process.env['SQS_QUEUE'],
-      WaitTimeSeconds: 3,
-      AttributeNames: ['All']
-    }, (err, msg) => {
-      if (err) {
-        console.log(err, err.stack);
-      } else {
-        console.log('received');
-        console.log(msg);
-        sqs.deleteMessage({
-          QueueUrl: process.env['SQS_QUEUE'],
-          ReceiptHandle: msg.receiptHandle
-        }, (err, data) => {
-          if (err) {
-            console.log(err, err.stack);
-          } else {
-            console.log('deleted');
-            console.log(data);
-          }
-        });
-      }
-    });
-  }
-});
-*/
