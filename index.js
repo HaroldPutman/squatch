@@ -55,7 +55,7 @@ function receiveMessages() {
       } else if (msg.Messages) {
         process.stdout.write('\n');
         for (const message of msg.Messages) {
-          console.log(JSON.parse(message.Body));
+          console.log(JSON.stringify(JSON.parse(message.Body), null, 2));
           sqs.deleteMessage({
             QueueUrl: process.env['SQS_QUEUE'],
             ReceiptHandle: message.ReceiptHandle
