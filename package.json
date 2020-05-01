@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "snyk-protect": "snyk protect",
+    "prepare": "npm run snyk-protect"
   },
   "author": "Harold Putman <h.putman@ieee.org>",
   "private": true,
@@ -13,9 +15,11 @@
   "dependencies": {
     "async": "^2.5.0",
     "aws-sdk": "^2.142.0",
-    "dotenv": "^4.0.0"
+    "dotenv": "^4.0.0",
+    "snyk": "^1.316.1"
   },
   "engines": {
     "node": ">=4.0.0"
-  }
+  },
+  "snyk": true
 }
