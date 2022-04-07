@@ -11,7 +11,7 @@
   "private": true,
   "license": "ISC",
   "dependencies": {
-    "async": "^2.5.0",
+    "async": "^3.2.2",
     "aws-sdk": "^2.142.0",
     "dotenv": "^4.0.0"
   },
